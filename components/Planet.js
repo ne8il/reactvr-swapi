@@ -22,18 +22,11 @@ export default class Planet extends Component {
   };
   constructor(props) {
     super(props);
-
-    const distance = 25;
-    const min = 10;
-    const posX = genPos(min, distance);
-    const posY = genPos(min, distance);
-    const posZ = genPos(min, distance);
-    const radius = Math.min(2, props.planet.diameter / 12000);
+    const radius = props.radius || Math.min(2, props.planet.diameter / 12000);
 
     this.state = {
-      translate: [posX, posY, posZ],
       color: getColor(),
-      radius,
+      radius: new Animated.Value(radius),
       spin: new Animated.Value(0)
     };
   }
@@ -42,16 +35,22 @@ export default class Planet extends Component {
     this.spinAnimation();
   }
 
-  getTranslate() {
-    const translate = [
-      this.state.translate[0] - (this.state.radius + 1),
-      this.state.translate[1] - (this.state.radius + 1),
-      this.state.translate[2] - (this.state.radius - 1)
-    ];
-    console.log(translate);
-    console.log(this.state.radius);
-    return translate;
-  }
+  bounce = () => {
+    // console.log('bouncing');
+    // console.log(this.state.radius);
+    const initial = this.state.radius._startingValue;
+    // this.state.radius.setValue(initial * 2);
+    Animated.sequence([
+      Animated.spring(this.state.radius, {
+        toValue: initial * 2,
+        friction: 1
+      }),
+      Animated.spring(this.state.radius, {
+        toValue: initial,
+        friction: 1
+      })
+    ]).start();
+  };
 
   spinAnimation() {
     const { rotationPeriod } = this.props.planet;
@@ -64,8 +63,8 @@ export default class Planet extends Component {
   }
 
   render() {
-    const { translate, color } = this.state;
-    const { onEnter, onExit, onClick, planet } = this.props;
+    const { color } = this.state;
+    const { translate, onEnter, onExit, onClick, planet } = this.props;
 
     const texture = getTexture(planet.id);
     const spin = this.state.spin.interpolate({
@@ -74,23 +73,13 @@ export default class Planet extends Component {
     });
 
     return (
-      <VrButton
-        style={{ transform: [{ translate }] }}
-        onClick={e => {
-          console.log(e);
-
-          console.log(`clicked ${planet.name}`);
-          onClick();
-        }}
-      >
+      <VrButton style={{ transform: [{ translate }] }} onClick={this.bounce}>
         <AnimatedSphere
           lit={true}
           onEnter={e => {
-            console.log(`enter ${planet.name}`);
             onEnter();
           }}
           onExit={e => {
-            console.log(`exit ${planet.name}`);
             onExit();
           }}
           radius={this.state.radius}
@@ -114,8 +103,6 @@ const getColor = () => {
   }
   return color;
 };
-
-const genPos = (min, range) => Math.max(10, Math.random() * range) * (Math.random() > 0.5 ? 1 : -1);
 
 const textures = [
   asset('textures/ceres.jpg'),

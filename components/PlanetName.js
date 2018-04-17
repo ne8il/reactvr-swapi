@@ -14,15 +14,7 @@ import {
 } from 'react-vr';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-
-const PLANET_QUERY = gql`
-  query Planet($id: ID) {
-    planet(id: $id) {
-      name
-      climates
-    }
-  }
-`;
+import Planet from './Planet';
 
 const PlanetName = ({ planet }) => {
   const hmMatrix = VrHeadModel.getHeadMatrix();
@@ -35,6 +27,7 @@ const PlanetName = ({ planet }) => {
         transform: [{ translate: [0, 0, 0] }, { matrix: hmMatrix }]
       }}
     >
+      <Planet planet={planet} radius={0.3} translate={[-1, -0.5, -2]} />
       <Text
         style={{
           position: 'absolute',
@@ -42,7 +35,7 @@ const PlanetName = ({ planet }) => {
           color: 'white',
           backgroundColor: 'black',
           fontSize: 0.2,
-          transform: [{ translate: [-0.5, -0.5, -2] }]
+          transform: [{ translate: [-1, -1, -2] }]
         }}
       >
         {planet.name}
