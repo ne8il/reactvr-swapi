@@ -4,6 +4,7 @@ import {
   AmbientLight,
   Animated,
   asset,
+  DirectionalLight,
   Pano,
   PointLight,
   Text,
@@ -19,6 +20,8 @@ import Planet from './components/Planet';
 import PlanetName from './components/PlanetName';
 
 const AnimatedScene = Animated.createAnimatedComponent(Scene);
+const AnimatedPointLight = Animated.createAnimatedComponent(PointLight);
+
 const PLANET_QUERY = gql`
   query Planets {
     allPlanets {
@@ -28,6 +31,7 @@ const PLANET_QUERY = gql`
         diameter
         climates
         terrains
+        rotationPeriod
       }
     }
   }
@@ -38,18 +42,14 @@ export default class MainScene extends React.Component {
     super(props);
     this.state = {
       currentPlanetId: null,
-      movement: new Animated.Value(0),
-      red: new Animated.Value(2),
-      bounceValue: new Animated.Value(-6),
-      rotation: new Animated.Value(0),
-      rotation2: new Animated.Value(-12)
+      translateX: new Animated.Value(0),
+      translateY: new Animated.Value(0),
+      translateZ: new Animated.Value(0),
+      rotation: new Animated.Value(0)
     };
   }
 
-  componentDidMount() {
-    this._bounce();
-    // this.rotate();
-  }
+  planetRefs = [];
 
   _bounce() {
     this.state.bounceValue.setValue(-12); // Start large
@@ -101,17 +101,29 @@ export default class MainScene extends React.Component {
     */
   }
 
+  moveTo(x, y, z) {
+    console.log(`move to ${x}, ${y}, ${z}`);
+    this.state.translateX.setValue(x);
+    this.state.translateY.setValue(y);
+    this.state.translateZ.setValue(z);
+  }
+
   render() {
     const { currentPlanet } = this.state;
     return (
       <AnimatedScene
         style={{
-          transform: [{ translate: [0, 0, this.state.movement] }, { rotateY: this.state.rotation }]
+          transform: [
+            {
+              translate: [this.state.translateX, this.state.translateY, this.state.translateZ]
+            },
+            { rotateY: this.state.rotation }
+          ]
         }}
       >
         {currentPlanet ? <PlanetName planet={currentPlanet} /> : null}
-        <PointLight decay={2} distance={50} intensity={5} />
-        <Pano source={asset('starfield2.jpg')}>
+        <AmbientLight decay={2} distance={10} intensity={1} />
+        <Pano source={asset('textures/milky_way.jpg')}>
           <Query query={PLANET_QUERY}>
             {({ loading, error, data = [] }) => {
               if (loading || error || !data.allPlanets) return null;
@@ -120,14 +132,24 @@ export default class MainScene extends React.Component {
                 <View>
                   {data.allPlanets.planets.map((planet, index) => (
                     <Planet
+                      key={planet.id}
+                      ref={c => {
+                        this.planetRefs[planet.id] = c;
+                      }}
+                      planet={planet}
                       onEnter={() => {
                         this.setState({ currentPlanet: planet });
                       }}
                       onExit={() => {
                         this.setState({ currentPlanet: null });
                       }}
-                      key={planet.id}
-                      planet={planet}
+                      onClick={() => {
+                        const translate = this.planetRefs[planet.id].getTranslate();
+                        this.moveTo(...translate);
+                      }}
+                      onBack={() => {
+                        this.moveTo(0, 0, 0);
+                      }}
                     />
                   ))}
                 </View>

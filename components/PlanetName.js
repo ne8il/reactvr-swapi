@@ -25,23 +25,24 @@ const PLANET_QUERY = gql`
 `;
 
 const PlanetName = ({ planet }) => {
-  console.log(VrHeadModel.rotation(), 'rotation');
+  const hmMatrix = VrHeadModel.getHeadMatrix();
 
-  const [rotateX, rotateY, rotateZ] = VrHeadModel.rotation();
   return (
     <View
       style={{
         position: 'absolute',
-        layoutOrigin: [0.5, 0.5],
-        transform: [{ translate: [0, 0, 0] }, { rotateX }, { rotateY }, { rotateZ: 0 }]
+        layoutOrigin: [0, 1],
+        transform: [{ translate: [0, 0, 0] }, { matrix: hmMatrix }]
       }}
     >
       <Text
         style={{
           position: 'absolute',
           layoutOrigin: [0.5, 0.5],
-          backgroundColor: '#f00',
-          transform: [{ translate: [0, 0, -2] }]
+          color: 'white',
+          backgroundColor: 'black',
+          fontSize: 0.2,
+          transform: [{ translate: [-0.5, -0.5, -2] }]
         }}
       >
         {planet.name}

@@ -1,11 +1,11 @@
-import React from "react";
-import MainScene from "./MainScene2";
-import { AppRegistry } from "react-vr";
-import { ApolloClient } from "apollo-client";
-import { HttpLink } from "apollo-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { ApolloProvider } from "react-apollo";
-const GRAPHQL_API_URL = "http://localhost:56600/";
+import React from 'react';
+import MainScene from './MainScene2';
+import { AppRegistry } from 'react-vr';
+import { ApolloClient } from 'apollo-client';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloProvider } from 'react-apollo';
+const GRAPHQL_API_URL = 'http://localhost:55319/';
 
 const client = new ApolloClient({
   // By default, this client will send queries to the
@@ -28,4 +28,4 @@ export default class ApolloWrapper extends React.Component {
   }
 }
 
-AppRegistry.registerComponent("WelcomeToVR", () => ApolloWrapper);
+AppRegistry.registerComponent('WelcomeToVR', () => ApolloWrapper);
