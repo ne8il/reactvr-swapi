@@ -1,20 +1,16 @@
 import React from 'react';
-import {
-  AppRegistry,
-  AmbientLight,
-  Animated,
-  asset,
-  Pano,
-  PointLight,
-  Text,
-  VrButton,
-  VrHeadModel,
-  View,
-  Scene
-} from 'react-vr';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { Text, VrHeadModel, View } from 'react-vr';
+import numeral from 'numeral';
+
 import Planet from './Planet';
+
+const textStyle = {
+  position: 'absolute',
+  layoutOrigin: [0.5, 0.5],
+  color: 'white',
+  backgroundColor: 'black',
+  fontSize: 0.2
+};
 
 const PlanetName = ({ planet }) => {
   const hmMatrix = VrHeadModel.getHeadMatrix();
@@ -30,15 +26,21 @@ const PlanetName = ({ planet }) => {
       <Planet planet={planet} radius={0.3} translate={[-1, -0.5, -2]} />
       <Text
         style={{
-          position: 'absolute',
-          layoutOrigin: [0.5, 0.5],
-          color: 'white',
-          backgroundColor: 'black',
-          fontSize: 0.2,
-          transform: [{ translate: [-1, -1, -2] }]
+          ...textStyle,
+          fontSize: 0.3,
+          transform: [{ translate: [-1, 0, -2] }]
         }}
       >
         {planet.name}
+      </Text>
+      <Text
+        style={{
+          ...textStyle,
+          fontSize: 0.1,
+          transform: [{ translate: [-1, -1, -2] }]
+        }}
+      >
+        (pop: {numeral(planet.population).format('0.0a')})
       </Text>
     </View>
   );

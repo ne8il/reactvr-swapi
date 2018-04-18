@@ -12,18 +12,17 @@ export default class Planet extends Component {
       diameter: PropTypes.number,
       rotationPeriod: PropTypes.number,
       population: PropTypes.number,
-      climates: PropTypes.string,
+      climates: PropTypes.array,
       terrains: PropTypes.string,
       surfaceWater: PropTypes.number
     }),
     onEnter: PropTypes.func,
     onExit: PropTypes.func,
-    translate: PropTypes.array,
-    radius: PropTypes.number
+    translate: PropTypes.array
   };
   constructor(props) {
     super(props);
-    const radius = props.radius || Math.min(2, props.planet.diameter / 12000);
+    const radius = Math.min(2, props.planet.diameter / 12000);
 
     this.state = {
       radius: new Animated.Value(radius),
@@ -61,7 +60,7 @@ export default class Planet extends Component {
   }
 
   render() {
-    const { translate, onEnter, onExit, planet } = this.props;
+    const { translate, planet } = this.props;
 
     const texture = getTexture(planet.id);
     const { climates } = planet;
@@ -77,11 +76,9 @@ export default class Planet extends Component {
           lit={true}
           onEnter={e => {
             this.setState({ hover: true });
-            onEnter();
           }}
           onExit={e => {
             this.setState({ hover: false });
-            onExit();
           }}
           wireframe={this.state.hover}
           radius={this.state.radius}
