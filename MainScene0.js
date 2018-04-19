@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppRegistry, asset, Pano, Text, View } from 'react-vr';
+import { asset, Pano, Text, View } from 'react-vr';
 
 export default class WelcomeToVR extends React.Component {
   render() {

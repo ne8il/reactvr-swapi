@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, asset, Sphere, VrButton } from 'react-vr';
+import { Animated, asset, Sphere, View } from 'react-vr';
 import { Easing } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -35,20 +35,6 @@ export default class Planet extends Component {
     this.spinAnimation();
   }
 
-  bounce = () => {
-    const initial = this.state.radius._startingValue;
-    Animated.sequence([
-      Animated.spring(this.state.radius, {
-        toValue: initial * 2,
-        friction: 1
-      }),
-      Animated.spring(this.state.radius, {
-        toValue: initial,
-        friction: 1
-      })
-    ]).start();
-  };
-
   spinAnimation() {
     const { rotationPeriod } = this.props.planet;
     this.state.spin.setValue(0);
@@ -71,7 +57,7 @@ export default class Planet extends Component {
     });
 
     return (
-      <VrButton style={{ transform: [{ translate }] }} onClick={this.bounce}>
+      <View style={{ transform: [{ translate }] }} onClick={this.bounce}>
         <AnimatedSphere
           lit={true}
           onEnter={e => {
@@ -90,7 +76,7 @@ export default class Planet extends Component {
             color
           }}
         />
-      </VrButton>
+      </View>
     );
   }
 }

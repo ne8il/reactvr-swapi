@@ -7,7 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 
 import MainScene from './MainScene5';
 
-const GRAPHQL_API_URL = 'http://localhost:59167/';
+const GRAPHQL_API_URL = 'http://localhost:55885/';
 
 const client = new ApolloClient({
   link: new HttpLink({
@@ -26,4 +26,7 @@ export default class ApolloWrapper extends React.Component {
   }
 }
 
-AppRegistry.registerComponent('WelcomeToVR', () => ApolloWrapper);
+AppRegistry.registerComponent(
+  'WelcomeToVR',
+  () => ApolloWrapper
+);

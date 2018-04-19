@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 import Planet from './components/Planet';
 import PlanetName from './components/PlanetName';
-// import DeathStar from './components/DeathStar';
+import DeathStar from './components/DeathStar';
 
 const PLANET_QUERY = gql`
   query Planets {
@@ -66,10 +66,14 @@ export default class MainScene extends React.Component {
                       planet={planet}
                       translate={TRANSLATE_ARRAY[index]}
                       onEnter={() => {
-                        this.setState({ currentPlanet: planet });
+                        this.setState({
+                          currentPlanet: planet
+                        });
                       }}
                       onExit={() => {
-                        this.setState({ currentPlanet: null });
+                        this.setState({
+                          currentPlanet: null
+                        });
                       }}
                     />
                   ))}
@@ -77,7 +81,7 @@ export default class MainScene extends React.Component {
               );
             }}
           </Query>
-          {/* <DeathStar /> */}
+          <DeathStar />
         </Pano>
       </Scene>
     );

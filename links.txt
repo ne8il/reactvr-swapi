@@ -1,0 +1,5 @@
+- https://stackoverflow.com/questions/45859098/how-do-i-keep-some-element-fixed-on-the-screen-in-react-vr
+- https://gist.github.com/cidicles/b4e978d3f3e2de8b359bdc51b5fb3261
+- https://facebook.github.io/react-vr/docs/vrheadmodel.html
+- https://www.solarsystemscope.com/textures/
+- https://medium.com/coding-artist/learn-react-vr-chapter-5-star-wars-modeling-74ebddbf96b8
