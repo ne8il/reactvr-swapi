@@ -17,7 +17,8 @@ To run:
 ```
 
 In index.vr.js you can swap out the MainSceneN files to see various stages I showed in the presentation.
-In the final MainScene5 you can hover on planets to see them in the overlay and click on them to make them bounce.
+- `MainScene1` has some cool camera movement if you're interested in getting that to work.
+- In the final `MainScene5` you can hover on planets to see them in the overlay and click on them to make them bounce.
 
 Links/Resources:
 - https://stackoverflow.com/questions/45859098/how-do-i-keep-some-element-fixed-on-the-screen-in-react-vr
