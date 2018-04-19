@@ -1,7 +1,7 @@
 # reactvr-swapi
 
 
-Dependencides:
+Dependencies:
 You need to have https://github.com/graphql/swapi-graphql installed
 
 To run:
@@ -17,6 +17,7 @@ To run:
 ```
 
 In index.vr.js you can swap out the MainSceneN files to see various stages I showed in the presentation.
+In the final MainScene5 you can hover on planets to see them in the overlay and click on them to make them bounce.
 
 Links/Resources:
 - https://stackoverflow.com/questions/45859098/how-do-i-keep-some-element-fixed-on-the-screen-in-react-vr
