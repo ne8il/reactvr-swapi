@@ -1,20 +1,35 @@
 # reactvr-swapi
 
 
+To run:
+Open two terminal windows/tabs, one for running this example and one for running the star wars api graphql server locally.
+
 Dependencies:
-You need to have https://github.com/graphql/swapi-graphql installed
+
+
+You need to have https://github.com/graphql/swapi-graphql installed and running
+Also npm
+and git
+
+```javascript
+# git clone https://github.com/graphql/swapi-graphql.git
+# cd swapi-graphql
+# npm i
+# npm start 
+```
+
+Now in the 2nd window:
 
 To run:
 
 ```javascript
-// in swapi console
-# npm start
-// take the port number it provides and plug that into index.vr.js
-
+# git clone https://github.com/ne8il/reactvr-swapi.git
 # npm i
+// In a code editor, take the port from the running swapi console and plug it into the PORT variable in index.vr.js
 # npm start
-// open at http://localhost:8081/vr/
 ```
+
+now open a browser at open at http://localhost:8081/vr/
 
 In index.vr.js you can swap out the MainSceneN files to see various stages I showed in the presentation.
 - `MainScene1` has some cool camera movement if you're interested in getting that to work.

@@ -7,7 +7,10 @@ import { ApolloProvider } from 'react-apollo';
 
 import MainScene from './MainScene5';
 
-const GRAPHQL_API_URL = 'http://localhost:55885/';
+// swapi port here
+const PORT = '55885';
+
+const GRAPHQL_API_URL = `http://localhost:${PORT}/`;
 
 const client = new ApolloClient({
   link: new HttpLink({
